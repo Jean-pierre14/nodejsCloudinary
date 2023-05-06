@@ -1,6 +1,7 @@
 import exp from "express";
 import dotenv from "dotenv";
 import { v2 as cloudinary } from "cloudinary";
+import fileUpload from "express-fileupload";
 
 dotenv.config({ path: `./.env` });
 
@@ -14,6 +15,9 @@ cloudinary.config({
 const app = exp(),
   PORT = process.env.PORT || 3004;
 
+app.use(
+  fileUpload({ useTempFiles: true, limits: { fileSize: 50 * 2024 * 1024 } })
+);
 app.use(exp.json());
 app.use(exp.urlencoded({ extended: false }));
 
