@@ -1,5 +1,6 @@
 import exp from "express";
 import dotenv from "dotenv";
+import mongoose from "mongoose"
 import { v2 as cloudinary } from "cloudinary";
 import fileUpload from "express-fileupload";
 import bodyParser from "body-parser";
@@ -22,6 +23,8 @@ app.use(
   })
 );
 
+
+
 app.use(exp.json());
 app.use(exp.urlencoded({ extended: false }));
 
@@ -31,13 +34,17 @@ app.use(bodyParser.urlencoded({ extends: false }));
 app.set("view engine", "ejs");
 
 app.get("/", (request, response) => {
+
   response.render("index");
+
 });
 
 app.post("/", async (request, response) => {
+
   const file = request.files.image;
 
   try {
+
     const result = await cloudinary.uploader.upload(file.tempFilePath, {
       public_id: `${Date.now()}`,
       resource_type: "auto",
@@ -47,9 +54,13 @@ app.post("/", async (request, response) => {
     console.log(result);
 
     response.redirect("/");
+
   } catch (error) {
+
     console.log(error);
+  
   }
+
 });
 
 app.listen(PORT, (error) => {
