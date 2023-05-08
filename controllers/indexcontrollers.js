@@ -1,3 +1,5 @@
 const postData = (request, response) => {
-  response.json({ msg: "Post controller" });
+  const { username } = request.body;
+  const file = request.files.image;
+  response.json(request.body);
 };
